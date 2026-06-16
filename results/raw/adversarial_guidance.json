@@ -1,0 +1,146 @@
+{
+  "experiment": "adversarial_guidance",
+  "status": "solved",
+  "plan_cost": 4.0,
+  "expanded": 4,
+  "certificates_checked": 15,
+  "certificates_rejected": 7,
+  "claim": "wrong learned pruning should be rejected by certification layer",
+  "diagnostics": {
+    "checked": 15,
+    "rejected": 7,
+    "theta": 0.75,
+    "events": [
+      {
+        "certificate": "admissible_bound_pruning",
+        "valid": false,
+        "reason": "certified lower bound does not permit pruning",
+        "metadata": {
+          "g": 0.0,
+          "h_safe": 0.0,
+          "incumbent": Infinity
+        }
+      },
+      {
+        "certificate": "transition_semantics",
+        "valid": true,
+        "reason": "transition verified against PDDL semantics including conditional effects",
+        "metadata": {
+          "action": "load-at-loc1",
+          "atoms_checked": 2
+        }
+      },
+      {
+        "certificate": "dominance_pruning",
+        "valid": false,
+        "reason": "no dominance certificate found",
+        "metadata": {}
+      },
+      {
+        "certificate": "transition_semantics",
+        "valid": true,
+        "reason": "transition verified against PDDL semantics including conditional effects",
+        "metadata": {
+          "action": "move-loc1-to-loc2",
+          "atoms_checked": 1
+        }
+      },
+      {
+        "certificate": "dominance_pruning",
+        "valid": false,
+        "reason": "no dominance certificate found",
+        "metadata": {}
+      },
+      {
+        "certificate": "admissible_bound_pruning",
+        "valid": false,
+        "reason": "certified lower bound does not permit pruning",
+        "metadata": {
+          "g": 1.0,
+          "h_safe": 0.0,
+          "incumbent": Infinity
+        }
+      },
+      {
+        "certificate": "transition_semantics",
+        "valid": true,
+        "reason": "transition verified against PDDL semantics including conditional effects",
+        "metadata": {
+          "action": "load-at-loc1",
+          "atoms_checked": 2
+        }
+      },
+      {
+        "certificate": "transition_semantics",
+        "valid": true,
+        "reason": "transition verified against PDDL semantics including conditional effects",
+        "metadata": {
+          "action": "move-loc1-to-loc2",
+          "atoms_checked": 3
+        }
+      },
+      {
+        "certificate": "dominance_pruning",
+        "valid": false,
+        "reason": "no dominance certificate found",
+        "metadata": {}
+      },
+      {
+        "certificate": "admissible_bound_pruning",
+        "valid": false,
+        "reason": "certified lower bound does not permit pruning",
+        "metadata": {
+          "g": 2.0,
+          "h_safe": 0.0,
+          "incumbent": Infinity
+        }
+      },
+      {
+        "certificate": "transition_semantics",
+        "valid": true,
+        "reason": "transition verified against PDDL semantics including conditional effects",
+        "metadata": {
+          "action": "move-loc2-to-loc1",
+          "atoms_checked": 1
+        }
+      },
+      {
+        "certificate": "admissible_bound_pruning",
+        "valid": false,
+        "reason": "certified lower bound does not permit pruning",
+        "metadata": {
+          "g": 3.0,
+          "h_safe": 0.0,
+          "incumbent": Infinity
+        }
+      },
+      {
+        "certificate": "transition_semantics",
+        "valid": true,
+        "reason": "transition verified against PDDL semantics including conditional effects",
+        "metadata": {
+          "action": "move-loc2-to-loc1",
+          "atoms_checked": 2
+        }
+      },
+      {
+        "certificate": "transition_semantics",
+        "valid": true,
+        "reason": "transition verified against PDDL semantics including conditional effects",
+        "metadata": {
+          "action": "deliver-at-loc2",
+          "atoms_checked": 2
+        }
+      },
+      {
+        "certificate": "plan_validation",
+        "valid": true,
+        "reason": "placeholder plan accepted",
+        "metadata": {
+          "cost": 4.0,
+          "length": 3
+        }
+      }
+    ]
+  }
+}

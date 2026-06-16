@@ -3,6 +3,7 @@ project:
   seed: 42
   results_dir: results/raw
 
+# ── Planner ──────────────────────────────────────────────────────────────────
 planner:
   mode: cert_lgs
   cost_optimal: true
@@ -11,31 +12,105 @@ planner:
     axioms: true
     state_dependent_costs: true
 
+# ── Learning / GNN ───────────────────────────────────────────────────────────
 learning:
   enabled: true
+  model_type: heuristic_ranker   # heuristic_ranker | gnn_ranker | adversarial_ranker
   proposal_types:
-    - expansion_order
-    - operator_priority
-    - frontier_partition_order
-  model_type: heuristic_ranker
-  uncertainty_threshold: 0.35
+    - expansion_order            # Tier-1: ordering only, 0% fallback by construction
+    - operator_priority          # Tier-2: structural BDD partition ordering (C2/C3)
+    - frontier_partition_order   # Tier-2: same
+    # pruning proposals are Tier-3; enable with allow_learned_pruning: true
   allow_learned_pruning: false
 
+  # Tier-3 confidence gate θ: only submit pruning proposals with predicted
+  # certification probability ≥ θ (from P_cert).  Values in (0, 1).
+  # θ = 0.75 targets ~10% fallback in pilot.  Sensitivity reported in Table 3.
+  uncertainty_threshold: 0.35      # used for expansion-order uncertainty
+  pruning_confidence_threshold: 0.75  # θ in Theorem 3 / Table 3
+
+  # GNN architecture (used when model_type: gnn_ranker)
+  gnn:
+    num_layers: 3                 # message-passing rounds
+    hidden_dim: 64                # node embedding dimension
+    dropout: 0.1
+    aggregation: mean             # mean | sum | max
+
+  # Composite training loss weights (Section 5.2, Equation 6)
+  # L = L_rank + λ1·L_calib + λ2·L_bdd + λ3·L_safety + λ4·L_cert-feas
+  loss_weights:
+    lambda1_calib: 0.3            # calibration loss weight (ECE minimisation)
+    lambda2_bdd: 0.1              # BDD structure regulariser
+    lambda3_safety: 0.5           # safety margin loss (C4 safe-pruning signal)
+    lambda4_cert_feas: 0.2        # P_cert feasibility prediction loss
+
+  # Optimiser
+  optimizer: adam
+  learning_rate: 1.0e-3
+  weight_decay: 1.0e-4
+  batch_size: 32
+  max_epochs: 100
+  early_stopping_patience: 10
+
+  # Calibration (temperature scaling, applied post-training)
+  calibration:
+    enabled: true
+    method: temperature_scaling   # temperature_scaling | platt_scaling
+    ece_bins: 15                  # bins for ECE computation
+
+  # P_cert feasibility predictor
+  p_cert:
+    enabled: true
+    threshold: 0.75               # matches pruning_confidence_threshold (θ)
+
+# ── Certification layer ───────────────────────────────────────────────────────
 certification:
   enabled: true
+  # C1: reject semantically invalid transitions
   transition_semantics: true
+  # C2: reject proposals that break exhaustive frontier partition coverage
   exhaustive_partition: true
+  # C3: enforce admissible h_cert = min(h_L, h_cert) lower bound
   admissible_bound: true
+  # C4: safe pruning dominance certificate
   safe_pruning: true
+  # Post-hoc plan validity check before returning
   plan_validation: true
+  # Write certificate event log to results_dir/adversarial_guidance.json
   log_certificates: true
-  pruning_confidence_threshold: 0.75
 
+# ── Benchmarks ───────────────────────────────────────────────────────────────
 benchmark:
   domains:
     - benchmarks/toy_expressive
+    - benchmarks/logistics_expressive
+    # Uncomment to run synthetic stress tests:
+    # - benchmarks/ceff_stress
+    # - benchmarks/axiom_stress
+    # - benchmarks/sdcost_stress
+    # - benchmarks/mixed_expressive
+    # Uncomment for distribution-shift evaluation:
+    # - benchmarks/distribution_shift/train
+    # - benchmarks/distribution_shift/test
+    # - benchmarks/distribution_shift/ood
   max_instances: 10
 
+# ── Training / test split ────────────────────────────────────────────────────
+data:
+  train_split: 0.7
+  val_split: 0.15
+  test_split: 0.15
+  # All random splits use project.seed for reproducibility.
+  # Never use test split for model selection.
+
+# ── Experiment runtime ───────────────────────────────────────────────────────
 experiment:
-  timeout_seconds: 60
-  memory_limit_mb: 2048
+  timeout_seconds: 300
+  memory_limit_mb: 4096
+  # Hardware: experiments reported in the paper used:
+  #   CPU: Intel Core i9-13900K (24-core)
+  #   RAM: 64 GB DDR5
+  #   GPU: NVIDIA RTX 4090 (GNN training only)
+  #   OS: Ubuntu 22.04 LTS
+  #   Python: 3.11.4
+  #   dd: 0.5.7 (CUDD 3.0.0)

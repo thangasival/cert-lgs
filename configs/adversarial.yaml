@@ -13,13 +13,28 @@ planner:
 
 learning:
   enabled: true
-  model_type: adversarial_ranker
+  model_type: adversarial_ranker   # worst-case test: proposes maximally wrong guidance
   proposal_types:
     - expansion_order
     - operator_priority
-    - unsafe_pruning_attempt
-  uncertainty_threshold: 0.0
+    - unsafe_pruning_attempt       # Tier-3: intentionally unsafe proposals
   allow_learned_pruning: true
+  uncertainty_threshold: 0.0       # no threshold — all proposals submitted
+  pruning_confidence_threshold: 0.0
+
+  # Loss weights not used for adversarial ranker (no training)
+  loss_weights:
+    lambda1_calib: 0.3
+    lambda2_bdd: 0.1
+    lambda3_safety: 0.5
+    lambda4_cert_feas: 0.2
+
+  calibration:
+    enabled: false
+
+  p_cert:
+    enabled: false
+    threshold: 0.0
 
 certification:
   enabled: true
@@ -35,6 +50,11 @@ benchmark:
     - benchmarks/toy_expressive
   max_instances: 10
 
+data:
+  train_split: 0.7
+  val_split: 0.15
+  test_split: 0.15
+
 experiment:
-  timeout_seconds: 60
-  memory_limit_mb: 2048
+  timeout_seconds: 300
+  memory_limit_mb: 4096

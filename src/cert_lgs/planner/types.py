@@ -24,6 +24,14 @@ class Action:
 
 
 @dataclass(frozen=True)
+class AxiomRule:
+    """A grounded PDDL derived-predicate rule: head ← body."""
+    head: str
+    head_args: tuple[str, ...]
+    body: frozenset[str]
+
+
+@dataclass(frozen=True)
 class SymbolicStateSet:
     """Placeholder symbolic state-set abstraction."""
 

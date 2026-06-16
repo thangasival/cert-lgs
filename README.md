@@ -36,8 +36,8 @@ the search.
 
 | Component | Status |
 |---|---|
-| PDDL parser (toy domain, ground actions) | Done |
-| Expressive semantics (conditional effects, axioms, SDAC) | Done |
+| PDDL parser (ground + parameterised actions, :types, :derived/axioms) | Done |
+| Expressive semantics (conditional effects, axioms SDAC, LFP closure) | Done |
 | BDD backend (`dd` library wrapper) | Done |
 | Symbolic search loop (UCS with certified proposals) | Done |
 | C1 — Semantic transition certificate | Done |
@@ -53,10 +53,14 @@ the search.
 | AdversarialRanker (worst-case test harness) | Done |
 | Toy expressive logistics benchmark | Done |
 | Adversarial robustness pilot (4/4 unsafe proposals rejected) | **Confirmed** |
-| Automated test suite | **90 tests, all passing** |
-| PDDL parser extension for parameterised actions + axioms | Pending |
-| Full-scale IPC benchmark evaluation | Pending |
+| Automated test suite | **127 tests, all passing** |
+| Group 1 benchmark (logistics_expressive, 5 problems) | Done |
+| Group 2 benchmark generators (CEffStress, AxiomStress, SDCostStress, Mixed) | Done |
+| Group 3 benchmark generator (distribution_shift, train/test/OOD) | Done |
+| Hyperparameter documentation (configs/default.yaml) | Done |
+| Training/test split infrastructure (utils/split.py) | Done |
 | GNN training on real benchmark instances | Pending |
+| Full-scale IPC benchmark evaluation | Pending |
 
 ---
 
@@ -257,13 +261,21 @@ cert-lgs/
 
 ## Pending before full paper submission
 
-- [ ] Extend PDDL parser to handle parameterised actions and axioms/derived predicates (required to load IPC benchmark domains)
-- [ ] Train GNN guidance model on small expressive benchmark instances
+**Completed:**
+- [x] Extend PDDL parser: `:types`, `:objects`, parameterised actions, `:derived` predicates/axioms (least-fixed-point closure) — 127 tests, all passing
+- [x] Group 1 benchmark (`benchmarks/logistics_expressive/`): parameterised logistics domain, 5 problem instances (p01–p05)
+- [x] Group 2 benchmark generators (`benchmarks/synthetic/`): CEffStress, AxiomStress, SDCostStress, MixedExpressive
+- [x] Group 3 benchmark generator (`benchmarks/distribution_shift/`): train/test/OOD splits with topology shift
+- [x] Hyperparameters documented in `configs/default.yaml` (λ₁–λ₄, θ, GNN architecture, LR, calibration)
+- [x] Training/test split infrastructure (`src/cert_lgs/utils/split.py`, seeded from `project.seed`)
+
+**Remaining (requires running experiments):**
+- [ ] Train GNN guidance model on small expressive benchmark instances (run `experiments/run_cert_lgs.py`)
 - [ ] Run full-scale evaluation: Cert-LGS vs. Sym-Expressive, Sym-OpPot, GNN-Heuristic, Cert-LGS-NoCert across IPC domain Groups 1–3
 - [ ] Measure per-tier fallback rates and θ-sensitivity on real benchmarks
-- [ ] Document hardware specs and runtime environment for all timed experiments
-- [ ] Verify all returned plans with independent PDDL validator
-- [ ] Add full benchmark domains to `benchmarks/` and publish dataset
+- [ ] Document runtime results (hardware: i9-13900K, 64 GB RAM, RTX 4090, Ubuntu 22.04; already noted in `configs/default.yaml`)
+- [ ] Verify all returned plans with an independent external PDDL plan validator
+- [ ] Publish dataset and confirm repository URL is publicly accessible
 
 ---
 
