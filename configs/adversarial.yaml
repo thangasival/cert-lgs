@@ -1,0 +1,40 @@
+project:
+  name: cert-lgs-adversarial
+  seed: 13
+  results_dir: results/raw
+
+planner:
+  mode: cert_lgs
+  cost_optimal: true
+  expressive_features:
+    conditional_effects: true
+    axioms: true
+    state_dependent_costs: true
+
+learning:
+  enabled: true
+  model_type: adversarial_ranker
+  proposal_types:
+    - expansion_order
+    - operator_priority
+    - unsafe_pruning_attempt
+  uncertainty_threshold: 0.0
+  allow_learned_pruning: true
+
+certification:
+  enabled: true
+  transition_semantics: true
+  exhaustive_partition: true
+  admissible_bound: true
+  safe_pruning: true
+  plan_validation: true
+  log_certificates: true
+
+benchmark:
+  domains:
+    - benchmarks/toy_expressive
+  max_instances: 10
+
+experiment:
+  timeout_seconds: 60
+  memory_limit_mb: 2048

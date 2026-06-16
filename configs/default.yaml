@@ -1,0 +1,41 @@
+project:
+  name: cert-lgs
+  seed: 42
+  results_dir: results/raw
+
+planner:
+  mode: cert_lgs
+  cost_optimal: true
+  expressive_features:
+    conditional_effects: true
+    axioms: true
+    state_dependent_costs: true
+
+learning:
+  enabled: true
+  proposal_types:
+    - expansion_order
+    - operator_priority
+    - frontier_partition_order
+  model_type: heuristic_ranker
+  uncertainty_threshold: 0.35
+  allow_learned_pruning: false
+
+certification:
+  enabled: true
+  transition_semantics: true
+  exhaustive_partition: true
+  admissible_bound: true
+  safe_pruning: true
+  plan_validation: true
+  log_certificates: true
+  pruning_confidence_threshold: 0.75
+
+benchmark:
+  domains:
+    - benchmarks/toy_expressive
+  max_instances: 10
+
+experiment:
+  timeout_seconds: 60
+  memory_limit_mb: 2048

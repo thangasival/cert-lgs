@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+dist/
+build/
+*.egg-info/
+results/raw/*
+results/tables/*
+results/figures/*
+!results/raw/.gitkeep
+!results/raw/adversarial_guidance.json
+!results/tables/.gitkeep
+!results/figures/.gitkeep
+.DS_Store
