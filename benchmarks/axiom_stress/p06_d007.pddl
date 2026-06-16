@@ -1,0 +1,17 @@
+; AxiomStress problem p06_d007
+(define (problem p06_d007)
+  (:domain axiom-stress)
+  (:init
+    (base-0)
+    (base-1)
+    (base-3)
+    (base-4)
+    (base-6)
+    (base-7)
+    (base-8)
+    (base-9)
+    (base-10)
+    (= (total-cost) 0))
+  (:goal (derived-6))
+  (:metric minimize (total-cost))
+)

@@ -1,0 +1,16 @@
+; SDCostStress problem p10_cf05
+(define (problem p10_cf05)
+  (:domain sdcost-stress)
+  (:init
+    (cost-state-0)
+    (cost-state-1)
+    (cost-state-2)
+    (cost-state-3)
+    (cost-state-4)
+    (= (total-cost) 0))
+  (:goal (and (op-6-done)
+             (op-4-done)
+             (op-3-done)
+             (op-7-done)))
+  (:metric minimize (total-cost))
+)

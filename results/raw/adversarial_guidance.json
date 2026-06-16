@@ -17,7 +17,8 @@
         "reason": "certified lower bound does not permit pruning",
         "metadata": {
           "g": 0.0,
-          "h_safe": 0.0,
+          "h_safe": 1.0,
+          "h_cert": 1.0,
           "incumbent": Infinity
         }
       },
@@ -57,7 +58,8 @@
         "reason": "certified lower bound does not permit pruning",
         "metadata": {
           "g": 1.0,
-          "h_safe": 0.0,
+          "h_safe": 1.0,
+          "h_cert": 1.0,
           "incumbent": Infinity
         }
       },
@@ -91,7 +93,8 @@
         "reason": "certified lower bound does not permit pruning",
         "metadata": {
           "g": 2.0,
-          "h_safe": 0.0,
+          "h_safe": 1.0,
+          "h_cert": 1.0,
           "incumbent": Infinity
         }
       },
@@ -110,7 +113,8 @@
         "reason": "certified lower bound does not permit pruning",
         "metadata": {
           "g": 3.0,
-          "h_safe": 0.0,
+          "h_safe": 1.0,
+          "h_cert": 1.0,
           "incumbent": Infinity
         }
       },

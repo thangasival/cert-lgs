@@ -1,0 +1,15 @@
+; CEffStress problem p04_f007
+(define (problem p04_f007)
+  (:domain ceff-stress)
+  (:init
+    (f8)
+    (f13)
+    (f15)
+    (f19)
+    (f2)
+    (f4)
+    (f5)
+    (= (total-cost) 0))
+  (:goal (f0))
+  (:metric minimize (total-cost))
+)

@@ -1,0 +1,15 @@
+; MixedExpressive problem p09
+(define (problem p09)
+  (:domain mixed-expressive)
+  (:init
+    (b0)
+    (b1)
+    (b2)
+    (b5)
+    (b6)
+    (b7)
+    (cf2)
+    (= (total-cost) 0))
+  (:goal (d1))
+  (:metric minimize (total-cost))
+)

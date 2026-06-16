@@ -1,0 +1,17 @@
+; CEffStress problem p06_f009
+(define (problem p06_f009)
+  (:domain ceff-stress)
+  (:init
+    (f11)
+    (f2)
+    (f13)
+    (f14)
+    (f10)
+    (f4)
+    (f8)
+    (f6)
+    (f12)
+    (= (total-cost) 0))
+  (:goal (f0))
+  (:metric minimize (total-cost))
+)

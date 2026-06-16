@@ -19,7 +19,7 @@ import matplotlib.patheffects as pe
 from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
 import numpy as np
 
-OUT = Path(__file__).parent.parent.parent / "results" / "figures"
+OUT = Path(__file__).parent.parent / "results" / "figures"
 OUT.mkdir(parents=True, exist_ok=True)
 
 # ── shared style ──────────────────────────────────────────────────────────────
@@ -519,19 +519,19 @@ def fig3_theta_sensitivity():
     raw_path.parent.mkdir(parents=True, exist_ok=True)
     with open(raw_path, "w") as f:
         json.dump({"n_confidence_levels": n_conf, "results": results}, f, indent=2)
-    print(f"Saved theta sweep data → {raw_path}")
+    print(f"Saved theta sweep data -> {raw_path}")
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("Generating Figure 1 — System Architecture …")
+    print("Generating Figure 1 - System Architecture ...")
     fig1_architecture()
 
-    print("Generating Figure 2 — Three-Tier Routing Flowchart …")
+    print("Generating Figure 2 - Three-Tier Routing Flowchart ...")
     fig2_tier_routing()
 
-    print("Generating Figure 3 -- theta-Sensitivity Curve ...")
+    print("Generating Figure 3 - theta-Sensitivity Curve ...")
     fig3_theta_sensitivity()
 
     print("\nAll figures written to:", OUT)

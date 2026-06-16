@@ -1,0 +1,15 @@
+; AxiomStress problem p04_d005
+(define (problem p04_d005)
+  (:domain axiom-stress)
+  (:init
+    (base-0)
+    (base-1)
+    (base-3)
+    (base-6)
+    (base-8)
+    (base-9)
+    (base-13)
+    (= (total-cost) 0))
+  (:goal (derived-4))
+  (:metric minimize (total-cost))
+)

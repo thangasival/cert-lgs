@@ -1,0 +1,15 @@
+; MixedExpressive problem p10
+(define (problem p10)
+  (:domain mixed-expressive)
+  (:init
+    (b0)
+    (b1)
+    (b3)
+    (b4)
+    (b5)
+    (b6)
+    (cf0)
+    (= (total-cost) 0))
+  (:goal (d1))
+  (:metric minimize (total-cost))
+)
